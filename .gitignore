@@ -1,5 +1,10 @@
 .vscode
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.streamlit/secrets.toml
 solar_env
 solar_env_broken_path_backup/
 save_model_day
@@ -7,3 +12,17 @@ save_model_2
 save_model
 Solar FYP.zip
 saved_models_1
+run.txt
+*.log
+Fequency Distribution Plots
+reports
+extra
+statistical analysis
+trends
+convert_models.py
+Frequency_Distribution_Plots.zip
+gcm-diagnose.log
+Model_Performance_Comparison.png
+scores_graphs.py
+trends.py
+
