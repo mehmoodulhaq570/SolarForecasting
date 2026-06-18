@@ -6,6 +6,7 @@
 import streamlit as st
 import os
 import sys
+import platform
 from datetime import datetime
 import numpy as np
 import pandas as pd
@@ -33,6 +34,7 @@ from frontend.models import (
 )
 from frontend.data import load_historical_data, get_data_summary
 from frontend.prediction import PredictionEngine
+from frontend.prediction import calibrate_ensemble_to_api
 from frontend.visualization import (
     create_forecast_plots,
     create_deep_learning_comparison_plot,
@@ -107,6 +109,9 @@ with st.sidebar.expander("📊 Model Availability", expanded=False):
     st.write(f"{'✅' if TENSORFLOW_AVAILABLE else '❌'} TensorFlow")
     st.write(f"{'✅' if PYTORCH_AVAILABLE else '❌'} PyTorch")
     st.write(f"{'✅' if XGBOOST_AVAILABLE else '❌'} XGBoost")
+    st.caption(f"Python: {platform.python_version()}")
+    if not TENSORFLOW_AVAILABLE and sys.version_info >= (3, 14):
+        st.info("TensorFlow models require Python 3.13 or lower.")
 
 # Filter available models for selection
 selectable_models = [
@@ -284,6 +289,15 @@ with tab1:
 
         # Generate predictions
         all_predictions = engine.predict_all(year, month, day, use_openmeteo_weights)
+
+        if api_preds and "Ensemble" in all_predictions:
+            all_predictions["Ensemble"] = calibrate_ensemble_to_api(
+                all_predictions["Ensemble"], api_preds, use_openmeteo_weights
+            )
+            st.info(
+                f"Applied API-guided ensemble calibration using {api_name} "
+                "to reduce same-day bias and timing drift."
+            )
 
         progress.progress(90, text="Creating visualizations...")
 

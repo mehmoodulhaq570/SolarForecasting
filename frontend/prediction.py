@@ -30,6 +30,52 @@ from .config import (
 )
 
 
+def calibrate_ensemble_to_api(
+    ensemble_preds: List[float],
+    api_preds: List[float],
+    use_openmeteo_weights: bool = False,
+) -> List[float]:
+    """
+    Correct the ensemble with the fetched API curve for display-time forecasts.
+
+    The base models are trained on historical NASA data, while Open-Meteo is a
+    real-time forecast source. This bounded correction removes same-day bias and
+    scale drift without replacing the model curve outright.
+    """
+    if not ensemble_preds or not api_preds or len(ensemble_preds) != len(api_preds):
+        return ensemble_preds
+
+    preds = np.array(ensemble_preds, dtype=float)
+    api = np.array(api_preds, dtype=float)
+    daylight_mask = api > 10
+
+    if daylight_mask.sum() < 3:
+        return ensemble_preds
+
+    pred_day = preds[daylight_mask]
+    api_day = api[daylight_mask]
+
+    pred_total = max(float(pred_day.sum()), 1.0)
+    api_total = max(float(api_day.sum()), 1.0)
+    scale = np.clip(api_total / pred_total, 0.70, 1.55)
+
+    scaled = preds * scale
+    bias = float(np.mean(api_day - scaled[daylight_mask]))
+    bias = float(np.clip(bias, -120.0, 160.0))
+
+    corrected = scaled + bias
+    corrected[~daylight_mask] = np.minimum(corrected[~daylight_mask], api[~daylight_mask])
+
+    blend_strength = 0.45 if use_openmeteo_weights else 0.25
+    calibrated = (1.0 - blend_strength) * corrected + blend_strength * api
+
+    max_allowed = max(float(api.max()) * 1.15, 1000.0)
+    calibrated = np.clip(calibrated, 0.0, max_allowed)
+    calibrated[api <= 1] = 0.0
+
+    return calibrated.tolist()
+
+
 class PredictionEngine:
     """
     Unified prediction engine for all model types.
@@ -478,6 +524,16 @@ class PredictionEngine:
             ensemble_preds.append(ensemble_pred)
 
         return ensemble_preds
+
+    def calibrate_ensemble_to_api(
+        self,
+        ensemble_preds: List[float],
+        api_preds: List[float],
+        use_openmeteo_weights: bool = False,
+    ) -> List[float]:
+        return calibrate_ensemble_to_api(
+            ensemble_preds, api_preds, use_openmeteo_weights
+        )
 
     def predict_all(
         self, year: int, month: int, day: int, use_openmeteo_weights: bool = False

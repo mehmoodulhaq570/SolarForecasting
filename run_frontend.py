@@ -10,10 +10,21 @@ import sys
 import subprocess
 
 
+def get_project_python(script_dir):
+    """Prefer the local virtual environment when it exists."""
+    if os.name == "nt":
+        venv_python = os.path.join(script_dir, "solar_env", "Scripts", "python.exe")
+    else:
+        venv_python = os.path.join(script_dir, "solar_env", "bin", "python")
+
+    return venv_python if os.path.exists(venv_python) else sys.executable
+
+
 def main():
     """Launch the Streamlit dashboard."""
     # Get the directory of this script
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    python_exe = get_project_python(script_dir)
 
     # Path to the frontend app
     app_path = os.path.join(script_dir, "frontend", "app.py")
@@ -28,9 +39,7 @@ def main():
 
     # Run streamlit
     try:
-        subprocess.run(
-            [sys.executable, "-m", "streamlit", "run", app_path], cwd=script_dir
-        )
+        subprocess.run([python_exe, "-m", "streamlit", "run", app_path], cwd=script_dir)
     except KeyboardInterrupt:
         print("\n👋 Dashboard stopped.")
     except Exception as e:

@@ -1,6 +1,7 @@
 .vscode
 __pycache__/
 solar_env
+solar_env_broken_path_backup/
 save_model_day
 save_model_2
 save_model
