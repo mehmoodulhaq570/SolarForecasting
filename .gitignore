@@ -14,7 +14,7 @@ Solar FYP.zip
 saved_models_1
 run.txt
 *.log
-Fequency Distribution Plots
+Frequency Distribution Plots
 reports
 extra
 statistical analysis
@@ -25,4 +25,12 @@ gcm-diagnose.log
 Model_Performance_Comparison.png
 scores_graphs.py
 trends.py
-
+reports
+statistical analysis
+trends
+Model_Performance_Comparison.png
+convert_models.py
+gcm-diagnose.log
+scores_graphs.py
+trend.py
+Frequency Distribution Plots.zip
