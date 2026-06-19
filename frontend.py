@@ -411,7 +411,7 @@ with tab1:
         date_index = pd.date_range(
             start=f"{year}-{month:02d}-{day:02d} 00:00",
             end=f"{year}-{month:02d}-{day:02d} 23:00",
-            freq="H",
+            freq="h",
         )
         hours = date_index.hour
 
