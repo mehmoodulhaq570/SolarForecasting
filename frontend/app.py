@@ -22,7 +22,7 @@ from frontend.config import (
     LOCATION_NAME,
     BASE_DIR,
 )
-from frontend.api import fetch_api_forecast
+from frontend.api import fetch_api_forecast, get_nasa_power_availability_note
 from frontend.models import (
     load_traditional_models,
     load_keras_models,
@@ -275,6 +275,14 @@ with tab1:
 
             if api_preds:
                 st.sidebar.success(f"✅ {api_name} data fetched!")
+                if api_name == "Open-Meteo (fallback)" and selected_api == "NASA POWER":
+                    nasa_note = get_nasa_power_availability_note(year, month, day)
+                    if nasa_note:
+                        st.sidebar.warning(f"NASA POWER unavailable: {nasa_note}")
+                    else:
+                        st.sidebar.warning(
+                            "NASA POWER did not return a usable 24-hour solar curve."
+                        )
             else:
                 st.sidebar.warning("⚠️ API data not available for this date")
         else:

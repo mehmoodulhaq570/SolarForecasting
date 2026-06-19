@@ -5,6 +5,7 @@
 
 import requests
 from typing import Optional, List
+from datetime import date
 from .config import LATITUDE, LONGITUDE, TIMEZONE, API_TIMEOUT
 
 
@@ -98,6 +99,19 @@ def fetch_nasa_power_solar(year: int, month: int, day: int) -> Optional[List[flo
     except Exception as e:
         print(f"NASA POWER API error: {e}")
         return None
+
+
+def get_nasa_power_availability_note(year: int, month: int, day: int) -> Optional[str]:
+    """Return a user-facing note when NASA POWER is unlikely to have this date yet."""
+    selected_date = date(year, month, day)
+    days_old = (date.today() - selected_date).days
+
+    if days_old < 0:
+        return "NASA POWER is historical only and cannot provide future dates."
+    if days_old < 8:
+        return "NASA POWER hourly data is usually delayed by about one week."
+
+    return None
 
 
 def fetch_api_forecast(api_name: str, year: int, month: int, day: int) -> tuple:
