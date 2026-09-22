@@ -18,7 +18,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 # ── Paths ──────────────────────────────────────────────────────────────────────
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-DATA_PATH = os.path.join(PROJECT_ROOT, "NASA Meteorological and Solar Radiation Data", "lahore_hourly_filled.csv")
+DATA_PATH = os.path.join(PROJECT_ROOT, "nasa_data", "lahore_hourly_filled.csv")
 LSTM_DIR = os.path.join(PROJECT_ROOT, "saved_models_lstm")
 TFT_DIR = os.path.join(PROJECT_ROOT, "saved_models_tft")
 OUT_DIR = SCRIPT_DIR

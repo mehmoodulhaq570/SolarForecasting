@@ -22,7 +22,7 @@ KERNEL_SIZE_TCN = 3
 # ============== Model Folders ==============
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_PATH = os.path.join(
-    BASE_DIR, "NASA Meteorological and Solar Radiation Data", "lahore_hourly_filled.csv"
+    BASE_DIR, "nasa_data", "lahore_hourly_filled.csv"
 )
 
 MODEL_FOLDERS = {

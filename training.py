@@ -42,7 +42,7 @@ def rmse(a, b):
 
 
 # ---------- 1. Load data ----------
-df = pd.read_csv("NASA Meteorological and Solar Radiation Data/lahore_hourly_filled.csv")
+df = pd.read_csv("nasa_data/lahore_hourly_filled.csv")
 df.columns = df.columns.str.strip()
 
 if "datetime" not in df.columns:
