@@ -75,6 +75,13 @@ for its forecasts against real data. See [`model_scores/`](model_scores/)
 for full metrics, residual analysis, ACF/PACF diagnostics, and
 actual-vs-predicted plots per base model.*
 
+### Sample ensemble forecasts
+
+| NASA POWER API | Open-Meteo API |
+|---|---|
+| ![Ensemble forecast vs NASA POWER API](trends/solar_forecast_2024_12_15.png) | ![Ensemble forecast vs Open-Meteo API](trends/solar_forecast_2025_12_21.png) |
+| Weighted ensemble prediction calibrated against the NASA POWER API | Weighted ensemble prediction calibrated against the Open-Meteo API |
+
 ## Features used
 
 Clear-sky radiation, direct radiation, diffuse radiation, solar zenith
