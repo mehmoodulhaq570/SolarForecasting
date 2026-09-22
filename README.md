@@ -1,26 +1,43 @@
-# Solar Radiation Forecasting for Lahore, Pakistan
+# ☀️ Solar Radiation Forecasting for Lahore, Pakistan
 
-A comparative study of statistical, machine
+**Final Year Project** — a comparative study of statistical, machine
 learning, and deep learning models for short-term solar radiation
 forecasting, using NASA POWER hourly meteorological data, deployed as an
 interactive Streamlit dashboard.
 
-## Overview
+## 📖 About the project
 
-Reliable solar radiation forecasts are essential for planning and
-operating photovoltaic (PV) systems — from sizing installations to
-scheduling grid dispatch. This project builds and benchmarks six
-forecasting models against ~7 years of hourly meteorological and solar
-radiation data for Lahore, Pakistan, combines them into a custom
-R²-weighted ensemble, and packages the result into a dashboard for
-interactive hourly and long-range forecasts.
+Pakistan's grid-scale and rooftop solar capacity is growing fast, but
+planning and operating photovoltaic (PV) systems depends on knowing how
+much sunlight is coming — from sizing an installation, to scheduling
+battery storage, to balancing supply on the grid. Weather-based forecasts
+alone are often too coarse for this; this project asks whether
+data-driven models trained on historical patterns can do better for a
+specific location.
+
+Using ~7 years of hourly meteorological and solar radiation
+measurements for Lahore from NASA's POWER project, this FYP:
+
+1. **Explores the data** — distribution, seasonality, and autocorrelation
+   of each meteorological variable (see [`frequency_plots/`](frequency_plots/)
+   and [`model_scores/acf_pacf/`](model_scores/acf_pacf/)).
+2. **Trains and benchmarks six forecasting approaches** — from classical
+   ensemble ML to modern deep sequence models — on the same train/test
+   split, so their errors are directly comparable.
+3. **Combines the strongest models into a custom weighted ensemble**,
+   weighting each model's contribution by its own test-set accuracy, then
+   calibrates the blended forecast against a live weather API at
+   inference time.
+4. **Ships the result as a usable dashboard** — not just notebooks — so
+   forecasts, model comparisons, and live-API validation are all
+   interactive.
 
 **Target variable:** hourly global solar radiation (W/m²)
 **Location:** Lahore, Pakistan (31.56°N, 74.35°E)
 **Data period:** January 2018 – October 2025 (~68,000 hourly records)
 **Data source:** [NASA POWER](https://power.larc.nasa.gov/) hourly API
 
-## Models compared
+## 🧠 Models compared
 
 | Model | Type |
 |---|---|
@@ -39,7 +56,7 @@ time the blended forecast is further calibrated against a live weather
 API (`frontend/prediction.py`, `trend.py`) to correct for short-term
 drift.
 
-### Results (test set)
+### 📊 Results (test set)
 
 | Model | R² (test) | MAE | RMSE |
 |---|---|---|---|
@@ -58,13 +75,13 @@ for its forecasts against real data. See [`model_scores/`](model_scores/)
 for full metrics, residual analysis, ACF/PACF diagnostics, and
 actual-vs-predicted plots per base model.*
 
-## Features used
+## 📥 Features used
 
 Clear-sky radiation, direct radiation, diffuse radiation, solar zenith
 angle, temperature, specific & relative humidity, pressure, wind speed,
 and wind direction — all at hourly resolution.
 
-## Project structure
+## 🗂️ Project structure
 
 ```
 frontend/                          Streamlit dashboard package (entry point: frontend/app.py)
@@ -101,7 +118,7 @@ run_frontend.py                    Convenience launcher for the dashboard
 convert_models.py                  Keras 2.x -> 3.x model conversion utility
 ```
 
-## Getting started
+## 🚀 Getting started
 
 ### Requirements
 
@@ -139,7 +156,7 @@ python training.py          # Random Forest, XGBoost, LSTM, CNN-LSTM
 python tft/train.py          # TCN / TFT
 ```
 
-## Documentation
+## 📚 Documentation
 
 Full write-ups — technical report, per-model explanations, statistical
 analysis of the input variables, and a user manual for training and
