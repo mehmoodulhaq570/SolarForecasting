@@ -1,6 +1,6 @@
 # Solar Radiation Forecasting for Lahore, Pakistan
 
-**Final Year Project** — A comparative study of statistical, machine
+A comparative study of statistical, machine
 learning, and deep learning models for short-term solar radiation
 forecasting, using NASA POWER hourly meteorological data, deployed as an
 interactive Streamlit dashboard.
@@ -11,8 +11,9 @@ Reliable solar radiation forecasts are essential for planning and
 operating photovoltaic (PV) systems — from sizing installations to
 scheduling grid dispatch. This project builds and benchmarks six
 forecasting models against ~7 years of hourly meteorological and solar
-radiation data for Lahore, Pakistan, and packages the best-performing
-models into a dashboard for interactive hourly and long-range forecasts.
+radiation data for Lahore, Pakistan, combines them into a custom
+R²-weighted ensemble, and packages the result into a dashboard for
+interactive hourly and long-range forecasts.
 
 **Target variable:** hourly global solar radiation (W/m²)
 **Location:** Lahore, Pakistan (31.56°N, 74.35°E)
@@ -29,6 +30,14 @@ models into a dashboard for interactive hourly and long-range forecasts.
 | CNN-LSTM | Convolutional + recurrent deep learning |
 | TCN | Temporal Convolutional Network |
 | TFT | Temporal Fusion Transformer |
+| **Weighted Ensemble** | Custom R²-weighted blend of XGBoost, Random Forest, LSTM & CNN-LSTM |
+
+The weighted ensemble is our own contribution, not an off-the-shelf
+model: each base model's contribution is weighted by its test-set R²
+score (`training.py`, saved as `ensemble_weights.pkl`), and at inference
+time the blended forecast is further calibrated against a live weather
+API (`frontend/prediction.py`, `trend.py`) to correct for short-term
+drift.
 
 ### Results (test set)
 
@@ -41,9 +50,13 @@ models into a dashboard for interactive hourly and long-range forecasts.
 | TFT | 0.947 | 28.58 | 63.69 |
 | TCN | 0.946 | 28.83 | 64.38 |
 
-*MAE/RMSE in W/m². See [`model_scores/`](model_scores/) for full metrics,
-residual analysis, ACF/PACF diagnostics, and actual-vs-predicted plots
-per model.*
+*MAE/RMSE in W/m². The weighted ensemble isn't scored as a fixed
+train/test split since it's computed and calibrated at inference time
+(see above) — see [`trend.py`](trend.py) and
+[`model_scores/actual_vs_predicted/`](model_scores/actual_vs_predicted/)
+for its forecasts against real data. See [`model_scores/`](model_scores/)
+for full metrics, residual analysis, ACF/PACF diagnostics, and
+actual-vs-predicted plots per base model.*
 
 ## Features used
 
@@ -132,6 +145,3 @@ Full write-ups — technical report, per-model explanations, statistical
 analysis of the input variables, and a user manual for training and
 running the dashboard — are in [`docs/`](docs/).
 
-## Author
-
-Faisal — Final Year Project, [add department / university here]
