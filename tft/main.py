@@ -85,7 +85,7 @@ def train_tft():
 
     # ---------- 1. Load data (same as training.py) ----------
     data_path = (
-        "../NASA meteriological and solar radiaton data/lahore_hourly_filled.csv"
+        "../NASA Meteorological and Solar Radiation Data/lahore_hourly_filled.csv"
     )
     df = pd.read_csv(data_path)
     df.columns = df.columns.str.strip()

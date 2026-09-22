@@ -1,36 +1,26 @@
-.vscode
+# Editors / IDEs
+.vscode/
+.idea/
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .pytest_cache/
-.streamlit/secrets.toml
-solar_env
+
+# Virtual environments
+solar_env/
 solar_env_broken_path_backup/
-save_model_day
-save_model_2
-save_model
-Solar FYP.zip
-saved_models_1
-run.txt
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Logs
 *.log
-Frequency Distribution Plots
-reports
-extra
-statistical analysis
-trends
-convert_models.py
-Frequency_Distribution_Plots.zip
-gcm-diagnose.log
-Model_Performance_Comparison.png
-scores_graphs.py
-trends.py
-reports
-"statistical analysis"
-trends
-"Model_Performance_Comparison.png"
-convert_models.py
-gcm-diagnose.log
-scores_graphs.py
-trend.py
-"Frequency Distribution Plots.zip"
+
+# Old / experimental model output dirs no longer used
+save_model_day/
+save_model_2/
+save_model/
+saved_models_1/

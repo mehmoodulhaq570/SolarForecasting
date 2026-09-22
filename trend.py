@@ -147,7 +147,7 @@ def list_available_apis():
 
 # ---------- 1. Load historical data ----------
 df = pd.read_csv(
-    "NASA meteriological and solar radiaton data/lahore_hourly_filled.csv",
+    "NASA Meteorological and Solar Radiation Data/lahore_hourly_filled.csv",
     parse_dates=["datetime"],
     dayfirst=True,
     index_col="datetime",
