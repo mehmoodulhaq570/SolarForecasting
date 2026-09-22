@@ -1,11 +1,11 @@
 # ☀️ Solar Radiation Forecasting for Lahore, Pakistan
 
-**Final Year Project** — a comparative study of statistical, machine
+A comparative study of statistical, machine
 learning, and deep learning models for short-term solar radiation
 forecasting, using NASA POWER hourly meteorological data, deployed as an
 interactive Streamlit dashboard.
 
-## 📖 About the project
+## About the project
 
 Pakistan's grid-scale and rooftop solar capacity is growing fast, but
 planning and operating photovoltaic (PV) systems depends on knowing how
@@ -37,7 +37,7 @@ measurements for Lahore from NASA's POWER project, this FYP:
 **Data period:** January 2018 – October 2025 (~68,000 hourly records)
 **Data source:** [NASA POWER](https://power.larc.nasa.gov/) hourly API
 
-## 🧠 Models compared
+## Models compared
 
 | Model | Type |
 |---|---|
@@ -56,7 +56,7 @@ time the blended forecast is further calibrated against a live weather
 API (`frontend/prediction.py`, `trend.py`) to correct for short-term
 drift.
 
-### 📊 Results (test set)
+### Results (test set)
 
 | Model | R² (test) | MAE | RMSE |
 |---|---|---|---|
@@ -75,13 +75,13 @@ for its forecasts against real data. See [`model_scores/`](model_scores/)
 for full metrics, residual analysis, ACF/PACF diagnostics, and
 actual-vs-predicted plots per base model.*
 
-## 📥 Features used
+## Features used
 
 Clear-sky radiation, direct radiation, diffuse radiation, solar zenith
 angle, temperature, specific & relative humidity, pressure, wind speed,
 and wind direction — all at hourly resolution.
 
-## 🗂️ Project structure
+## Project structure
 
 ```
 frontend/                          Streamlit dashboard package (entry point: frontend/app.py)
@@ -118,7 +118,7 @@ run_frontend.py                    Convenience launcher for the dashboard
 convert_models.py                  Keras 2.x -> 3.x model conversion utility
 ```
 
-## 🚀 Getting started
+##  Getting started
 
 ### Requirements
 
@@ -156,7 +156,7 @@ python training.py          # Random Forest, XGBoost, LSTM, CNN-LSTM
 python tft/train.py          # TCN / TFT
 ```
 
-## 📚 Documentation
+## Documentation
 
 Full write-ups — technical report, per-model explanations, statistical
 analysis of the input variables, and a user manual for training and
